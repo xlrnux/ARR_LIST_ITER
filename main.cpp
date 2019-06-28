@@ -111,6 +111,19 @@ public:
         ++pos;
     }
 
+    void insert(MY_LIST<T>::Iter& p, T data) {
+        int next = node[p.it].next;
+        int prev = p.it; //node[next].prev;
+
+        node[pos].val = data;
+        node[pos].prev = prev;
+        node[prev].next = pos;
+
+        node[pos].next = next;
+        node[next].prev = pos;
+        ++pos;
+    }
+
     void pop_back() {
         int target = node[TAIL].prev;
 
@@ -197,6 +210,22 @@ int main()
     for(MY_LIST<int>::Iter _it = ml.begin(); _it != ml.end(); ++_it){
         cout << *_it << "\n";
     }
+    cout << "\n\n";
+
+    for(MY_LIST<int>::Iter _it = ml.begin(); _it != ml.end(); ++_it){
+        if(*_it == 14){
+            ml.insert(_it, 100);
+        }
+    }
+
+
+    it = ml.ibegin(); // 그냥 int 형 인덱스 기반
+    while( ml.node[it].next != ml.iend() ){
+        cout << ml.node[it].val << "\n";
+        it = ml.node[it].next;
+    }
+
+    cout << "\n\n";
 
     return 0;
 }
